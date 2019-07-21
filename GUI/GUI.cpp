@@ -308,9 +308,9 @@ void GUI::DrawCircle(int x, int y, int radius, bool color)
 
 	const int numberOfSides = 360;
 	const int numberOfVertices = numberOfSides + 2;
-	const double M_PI = 3.1415926535897;
+	const double myPI = 3.1415926535897;
 
-	GLfloat twicePi = 2.0f * M_PI;
+	GLfloat twicePi = 2.0f * myPI;
 
 	GLfloat circleVerticesX[numberOfVertices];
 	GLfloat circleVerticesY[numberOfVertices];
