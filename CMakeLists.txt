@@ -15,36 +15,35 @@ add_executable(Backgammon-gl
   Game/Game.h     
   )
 
+source_group("Utility"
+  FILES
+  Utility/Utility.cpp
+  Utility/Utility.h
+  )
+
+source_group("GUI"
+  FILES
+  GUI/GUI.cpp
+  GUI/GUI.h
+  )
+
+source_group("Game"
+  FILES
+  Game/Game.cpp
+  Game/Game.h
+  )
+
 # OpenGL
 find_package(OpenGL REQUIRED)
 target_link_libraries(Backgammon-gl OpenGL::GL)
 
 # GLFW
-find_path(GLFW3_INCLUDE_PATH GLFW/glfw3.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/glfw/include)
-
-find_library(GLFW3_LIBRARY
-  NAMES glfw3 GLFW glfw3dll
-  PATHS ${CMAKE_CURRENT_SOURCE_DIR}/deps/glfw/
-  PATH_SUFFIXES lib-mingw lib-vc2017
-  )
-
-include_directories(${GLFW3_INCLUDE_PATH})
-target_link_libraries(Backgammon-gl
-  ${GLFW3_LIBRARY})
+add_subdirectory(deps/glfw)
 
 # GLEW
-find_path(GLEW_INCLUDE_DIRS GL/glew.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/glew/include)
+# add_subdirectory(deps/glew)
 
-find_library(GLEW_LIBRARIES
-  NAMES GLEW glew32 glew glew32s
-  PATHS ${CMAKE_CURRENT_SOURCE_DIR}/deps/glew/lib/Release/Win32
-  )
-
-include_directories(${GLEW_INCLUDE_DIRS})
-target_link_libraries(Backgammon-gl
-  ${GLEW_LIBRARIES})
+target_link_libraries(Backgammon-gl glfw)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Backgammon-gl)
 
