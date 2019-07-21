@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
 set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_STANDARD 14)
+
+add_compile_options(-Wall)
 
 project(Backgammon-gl)
 add_executable(Backgammon-gl
@@ -23,7 +26,8 @@ find_path(GLFW3_INCLUDE_PATH GLFW/glfw3.h
 
 find_library(GLFW3_LIBRARY
   NAMES glfw3 GLFW glfw3dll
-  PATHS ${CMAKE_CURRENT_SOURCE_DIR}/deps/glfw/lib-vc2017
+  PATHS ${CMAKE_CURRENT_SOURCE_DIR}/deps/glfw/
+  PATH_SUFFIXES lib-mingw lib-vc2017
   )
 
 include_directories(${GLFW3_INCLUDE_PATH})
