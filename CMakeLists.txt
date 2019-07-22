@@ -39,10 +39,6 @@ target_link_libraries(Backgammon-gl OpenGL::GL)
 
 # GLFW
 add_subdirectory(deps/glfw)
-
-# GLEW
-# add_subdirectory(deps/glew)
-
 target_link_libraries(Backgammon-gl glfw)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Backgammon-gl)
