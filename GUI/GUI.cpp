@@ -15,9 +15,9 @@ GUI::GUI() :
     mTokenRadius(40), mBarWidth(80)
 {
     srand(time(0));
-	
+        
     for (auto &c : mCell)
-	c.status = IDLE;
+        c.status = IDLE;
 
     mColors[HIGHLIGHTED] = "#B4D5FF";
     mColors[IDLE] = "#381704";
@@ -39,8 +39,8 @@ GUI::GUI() :
 
     if (!mWindow)
     {
-	glfwTerminate();
-	/*return -1;*/
+        glfwTerminate();
+        /*return -1;*/
     }
 
     glfwSetCursorPosCallback(mWindow, CursorPositionCallback);
@@ -108,23 +108,23 @@ void GUI::CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)
 void GUI::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT)
-	if (action == GLFW_PRESS)
-	    mLeftClickf = true;
+        if (action == GLFW_PRESS)
+            mLeftClickf = true;
 
     if (button == GLFW_MOUSE_BUTTON_RIGHT)
-	if (action == GLFW_PRESS)
-	    mCancelf = true;
+        if (action == GLFW_PRESS)
+            mCancelf = true;
 }
 
 void GUI::KeyboardKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_SPACE)
-	if (action == GLFW_PRESS)
-	    mSpacePressf = true;
+        if (action == GLFW_PRESS)
+            mSpacePressf = true;
 
     if (key == GLFW_KEY_ESCAPE)
-	if (action == GLFW_PRESS)
-	    mCancelf = true;
+        if (action == GLFW_PRESS)
+            mCancelf = true;
 }
 
 GUI::~GUI()
@@ -137,26 +137,26 @@ void GUI::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)
     switch (CURRENT_MODE)
     {
     case STANDBY:
-	SetColor("#F1C38E", true);
-	break;
+        SetColor("#F1C38E", true);
+        break;
 
     case PIECE_SELECTION:
-	SetColor(0xD26AD9, true);
-	break;
+        SetColor(0xD26AD9, true);
+        break;
 
     case MOVE_SELECTION:
-	SetColor("#0BA494", true);
-	break;
-	
+        SetColor("#0BA494", true);
+        break;
+        
     case BO_MOVE_SELECTION:
-	SetColor(0xFF0000, true);
-	break;
+        SetColor(0xFF0000, true);
+        break;
     }
     glClear(GL_COLOR_BUFFER_BIT);
     glLineWidth(3);
 
     for (int i = 0; i < 24; i++)
-	DrawCell(i, board[i]);
+        DrawCell(i, board[i]);
 
     // Middle bar:
     SetColor(mColors[IDLE]);
@@ -185,43 +185,43 @@ void GUI::DrawCell(int i, const Cell &c)
     switch (quad)
     {
     case 0:
-	//Top Left:
-	break;
+        //Top Left:
+        break;
 
     case 1:
-	//Top Right:
-	p1.x += 6 * mCellWidth + mBarWidth;
-	p2.x += 6 * mCellWidth + mBarWidth;
-	p3.x += 6 * mCellWidth + mBarWidth;
-	break;
+        //Top Right:
+        p1.x += 6 * mCellWidth + mBarWidth;
+        p2.x += 6 * mCellWidth + mBarWidth;
+        p3.x += 6 * mCellWidth + mBarWidth;
+        break;
 
     case 2:
-	//Bottom Right
-	i = 5 - i;
+        //Bottom Right
+        i = 5 - i;
 
-	p1.x = mCellWidth * i;
-	p2.x = mCellWidth * (1 + i);
-	p3.x = mCellWidth * (0.5 + i);
+        p1.x = mCellWidth * i;
+        p2.x = mCellWidth * (1 + i);
+        p3.x = mCellWidth * (0.5 + i);
 
-	p1.x += 6 * mCellWidth + mBarWidth;
-	p2.x += 6 * mCellWidth + mBarWidth;
-	p3.x += 6 * mCellWidth + mBarWidth;
+        p1.x += 6 * mCellWidth + mBarWidth;
+        p2.x += 6 * mCellWidth + mBarWidth;
+        p3.x += 6 * mCellWidth + mBarWidth;
 
-	p1.y = p2.y = mScreenHeight;
-	p3.y = mScreenHeight - mCellHeight;
-	break;
+        p1.y = p2.y = mScreenHeight;
+        p3.y = mScreenHeight - mCellHeight;
+        break;
 
     case 3:
-	//Bottom Left
-	i = 5 - i;
+        //Bottom Left
+        i = 5 - i;
 
-	p1.x = mCellWidth * i;
-	p2.x = mCellWidth * (1 + i);
-	p3.x = mCellWidth * (0.5 + i);
+        p1.x = mCellWidth * i;
+        p2.x = mCellWidth * (1 + i);
+        p3.x = mCellWidth * (0.5 + i);
 
-	p1.y = p2.y = mScreenHeight;
-	p3.y = mScreenHeight - mCellHeight;
-	break;
+        p1.y = p2.y = mScreenHeight;
+        p3.y = mScreenHeight - mCellHeight;
+        break;
     }
 
     SetColor(cellColor);
@@ -234,11 +234,11 @@ void GUI::DrawCell(int i, const Cell &c)
 void GUI::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
 {
     float vertices[] =
-	{
-	    x1, y1,	0.0,
-	    x2, y2,	0.0,
-	    x3, y3,	0.0
-	};
+        {
+            x1, y1,     0.0,
+            x2, y2,     0.0,
+            x3, y3,     0.0
+        };
 
     glEnableClientState(GL_VERTEX_ARRAY); // tell OpenGL that you're using a vertex array for fixed-function attribute
 
@@ -256,12 +256,12 @@ void GUI::DrawTriangle(Point p1, Point p2, Point p3)
 void GUI::DrawRectangle(int x1, int y1, int x2, int y2)
 {
     float vertices[] =
-	{
-	    x1, y1, 0.0,
-	    x2, y1, 0.0,
-	    x2, y2, 0.0,
-	    x1, y2, 0.0,
-	};
+        {
+            x1, y1, 0.0,
+            x2, y1, 0.0,
+            x2, y2, 0.0,
+            x1, y2, 0.0,
+        };
 
     glEnableClientState(GL_VERTEX_ARRAY); // tell OpenGL that you're using a vertex array for fixed-function attribute
 
@@ -279,10 +279,10 @@ void GUI::DrawRectangle(Point p1, Point p2)
 void GUI::DrawLine(int x1, int y1, int x2, int y2)
 {
     float vertices[] =
-	{
-	    x1, y1, 0.0,
-	    x2, y2, 0.0,
-	};
+        {
+            x1, y1, 0.0,
+            x2, y2, 0.0,
+        };
 
     glEnable(GL_LINE_SMOOTH);
     glEnableClientState(GL_VERTEX_ARRAY); // tell OpenGL that you're using a vertex array for fixed-function attribute
@@ -302,9 +302,9 @@ void GUI::DrawLine(Point p1, Point p2)
 void GUI::DrawCircle(int x, int y, int radius, bool color)
 {
     if (color)
-	SetColor("#000000");
+        SetColor("#000000");
     else
-	SetColor("#FFFFFF");
+        SetColor("#FFFFFF");
 
     const int numberOfSides = 360;
     const int numberOfVertices = numberOfSides + 2;
@@ -322,18 +322,18 @@ void GUI::DrawCircle(int x, int y, int radius, bool color)
 
     for (int i = 1; i < numberOfVertices; i++)
     {
-	circleVerticesX[i] = x + (radius * cos(i *  twicePi / numberOfSides));
-	circleVerticesY[i] = y + (radius * sin(i * twicePi / numberOfSides));
-	circleVerticesZ[i] = 0;
+        circleVerticesX[i] = x + (radius * cos(i *  twicePi / numberOfSides));
+        circleVerticesY[i] = y + (radius * sin(i * twicePi / numberOfSides));
+        circleVerticesZ[i] = 0;
     }
 
     GLfloat allCircleVertices[(numberOfVertices) * 3];
 
     for (int i = 0; i < numberOfVertices; i++)
     {
-	allCircleVertices[i * 3] = circleVerticesX[i];
-	allCircleVertices[(i * 3) + 1] = circleVerticesY[i];
-	allCircleVertices[(i * 3) + 2] = circleVerticesZ[i];
+        allCircleVertices[i * 3] = circleVerticesX[i];
+        allCircleVertices[(i * 3) + 1] = circleVerticesY[i];
+        allCircleVertices[(i * 3) + 2] = circleVerticesZ[i];
     }
 
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -350,10 +350,10 @@ void GUI::DrawCircle(Point p, int radius, bool color)
 void GUI::SetColor(int r, int g, int b, bool background)
 {
     if (background)
-	glClearColor(r / 255.0, g / 255.0, b / 255.0, 1);
+        glClearColor(r / 255.0, g / 255.0, b / 255.0, 1);
 
     else
-	glColor3f(r / 255.0, g / 255.0, b / 255.0);
+        glColor3f(r / 255.0, g / 255.0, b / 255.0);
 }
 
 void GUI::SetColor(Color c, bool background)
@@ -380,56 +380,56 @@ int GUI::CellNumber()
 
     for (int i = 0; i < 6; i++)
     {
-	//Top Left:
-	Point A = { mCellWidth * i, 0 };
-	Point B = { mCellWidth * (1 + i), 0 };
-	Point C = { mCellWidth * (0.5 + i), mCellHeight };
+        //Top Left:
+        Point A = { mCellWidth * i, 0 };
+        Point B = { mCellWidth * (1 + i), 0 };
+        Point C = { mCellWidth * (0.5 + i), mCellHeight };
 
-	At = TriangleArea(A, B, C);
-	A1 = TriangleArea(P, B, C);
-	A2 = TriangleArea(P, A, C);
-	A3 = TriangleArea(P, A, B);
+        At = TriangleArea(A, B, C);
+        A1 = TriangleArea(P, B, C);
+        A2 = TriangleArea(P, A, C);
+        A3 = TriangleArea(P, A, B);
 
-	if (At == A1 + A2 + A3)
-	    return i;
+        if (At == A1 + A2 + A3)
+            return i;
 
-	//Top Right:
-	A.x += 6 * mCellWidth + mBarWidth;
-	B.x += 6 * mCellWidth + mBarWidth;
-	C.x += 6 * mCellWidth + mBarWidth;
+        //Top Right:
+        A.x += 6 * mCellWidth + mBarWidth;
+        B.x += 6 * mCellWidth + mBarWidth;
+        C.x += 6 * mCellWidth + mBarWidth;
 
-	At = TriangleArea(A, B, C);
-	A1 = TriangleArea(P, B, C);
-	A2 = TriangleArea(P, A, C);
-	A3 = TriangleArea(P, A, B);
+        At = TriangleArea(A, B, C);
+        A1 = TriangleArea(P, B, C);
+        A2 = TriangleArea(P, A, C);
+        A3 = TriangleArea(P, A, B);
 
-	if (At == A1 + A2 + A3)
-	    return i + 6;
+        if (At == A1 + A2 + A3)
+            return i + 6;
 
-	//Bottom Right:
-	A.y = B.y = mScreenHeight;
-	C.y = mScreenHeight - mCellHeight;
+        //Bottom Right:
+        A.y = B.y = mScreenHeight;
+        C.y = mScreenHeight - mCellHeight;
 
-	At = TriangleArea(A, B, C);
-	A1 = TriangleArea(P, B, C);
-	A2 = TriangleArea(P, A, C);
-	A3 = TriangleArea(P, A, B);
+        At = TriangleArea(A, B, C);
+        A1 = TriangleArea(P, B, C);
+        A2 = TriangleArea(P, A, C);
+        A3 = TriangleArea(P, A, B);
 
-	if (At == A1 + A2 + A3)
-	    return 17 - i;
+        if (At == A1 + A2 + A3)
+            return 17 - i;
 
-	//Bottom Left
-	A.x -= 6 * mCellWidth + mBarWidth;
-	B.x -= 6 * mCellWidth + mBarWidth;
-	C.x -= 6 * mCellWidth + mBarWidth;
+        //Bottom Left
+        A.x -= 6 * mCellWidth + mBarWidth;
+        B.x -= 6 * mCellWidth + mBarWidth;
+        C.x -= 6 * mCellWidth + mBarWidth;
 
-	At = TriangleArea(A, B, C);
-	A1 = TriangleArea(P, B, C);
-	A2 = TriangleArea(P, A, C);
-	A3 = TriangleArea(P, A, B);
+        At = TriangleArea(A, B, C);
+        A1 = TriangleArea(P, B, C);
+        A2 = TriangleArea(P, A, C);
+        A3 = TriangleArea(P, A, B);
 
-	if (At == A1 + A2 + A3)
-	    return 23 - i;
+        if (At == A1 + A2 + A3)
+            return 23 - i;
     }
 
     return -1;
