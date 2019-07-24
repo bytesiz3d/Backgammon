@@ -102,7 +102,7 @@ bool GUI::Closed()
 void GUI::CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)
 {
     mX = xpos, mY = ypos;
-    //std::cout<< " (" << xpos << ", " << ypos << ")\n";
+    //std::cout << " (" << xpos << ", " << ypos << ")\n";
 }
 
 void GUI::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
