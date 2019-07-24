@@ -5,32 +5,34 @@
 
 class Game
 {
-	GUI *pGUI;
+    GUI *pGUI;
 
-	// Board
-	Cell mCell[24];
+    // Board
+    Cell mCell[24];
 	
-	vector <int> mMoves;
+    vector <int> mMoves;
 	
-	bool mBearingOff[2];
+    bool mBearingOff[2];
 
-	PROGRAM_MODE mMode;
+    PROGRAM_MODE mMode;
 
-	void ResetAllCells(STATUS PLAYER);
-	void ShowMoves(int click, STATUS PLAYER);
-	void ShowBearingOffMoves(STATUS PLAYER);
+    void ResetAllCells(STATUS PLAYER);
+    void ShowMoves(int click, STATUS PLAYER);
+
+    bool Removable(STATUS PLAYER, int& largestMove, int &furthestCell);
+    void ShowRemovableMoves(STATUS PLAYER, int largestMove, int furthestCell);
 	
-	void FillMoves();
-	void RemoveChosenMove(int chosenCell, int previousCell, STATUS PLAYER);
-	void DoMove(int previousCell, int chosenCell, STATUS PLAYER);
+    void FillMoves();
+    void RemoveChosenMove(int chosenCell, int previousCell, STATUS PLAYER);
+    void DoMove(int previousCell, int chosenCell, STATUS PLAYER);
 
-	void CheckBearingOff();
+    void CheckBearingOff(STATUS PLAYER);
 
 public:
-	Game();
+    Game();
 
-	void Play();
+    void Play();
 	
-	~Game();
+    ~Game();
 };
 

@@ -16675,25 +16675,26 @@ static void error_callback(int error, const char* description)error_callback66
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)key_callback71,2073
 int main(int argc, char** argv)main92,2570
 
-Game\Game.cpp,566
+Game\Game.cpp,702
 void Game::ResetAllCells(STATUS PLAYER)ResetAllCells5,25
-void Game::ShowMoves(int click, STATUS PLAYER)ShowMoves16,257
-void Game::ShowBearingOffMoves(STATUS PLAYER)ShowBearingOffMoves40,855
-void Game::FillMoves()FillMoves104,2049
-void Game::RemoveChosenMove(int previousCell, int chosenCell, STATUS PLAYER)RemoveChosenMove120,2400
-void Game::DoMove(int previousCell, int chosenCell, STATUS PLAYER)DoMove132,2675
-void Game::CheckBearingOff()CheckBearingOff146,3006
-Game::Game()Game179,3439
-void Game::Play()Play189,3604
-Game::~Game()~Game425,8661
+void Game::ShowMoves(int click, STATUS PLAYER)ShowMoves16,262
+bool Game::Removable(STATUS PLAYER, int& largestMove, int& furthestCell)Removable40,869
+void Game::ShowRemovableMoves(STATUS PLAYER, int largestMove, int furthestCell)ShowRemovableMoves75,1472
+void Game::FillMoves()FillMoves97,1894
+void Game::RemoveChosenMove(int previousCell, int chosenCell, STATUS PLAYER)RemoveChosenMove113,2266
+void Game::DoMove(int previousCell, int chosenCell, STATUS PLAYER)DoMove125,2554
+void Game::CheckBearingOff(STATUS PLAYER)CheckBearingOff139,2896
+Game::Game()Game183,3467
+void Game::Play()Play194,3658
+Game::~Game()~Game472,9772
 
-Game\Game.h,184
+Game\Game.h,199
 class GameGame6,74
-	GUI *pGUI;pGUI8,89
-	Cell mCell[24];mCell11,115
-	vector <int> mMoves;mMoves13,136
-	bool mBearingOff[2];mBearingOff15,162
-	PROGRAM_MODE mMode;mMode17,187
+    GUI *pGUI;pGUI8,89
+    Cell mCell[24];mCell11,121
+    vector <int> mMoves;mMoves13,145
+    bool mBearingOff[2];mBearingOff15,174
+    PROGRAM_MODE mMode;mMode17,202
 
 GUI\GUI.cpp,1986
 int GUI::mX = 0;mX3,20
@@ -16703,31 +16704,31 @@ bool GUI::mLeftClickf = false;mLeftClickf8,88
 bool GUI::mCancelf = false;mCancelf9,120
 bool GUI::mSpacePressf = false;mSpacePressf11,151
 GUI::GUI() :GUI13,186
-void GUI::PollEvents()PollEvents67,1588
-void GUI::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board)UpdateInteface72,1640
-bool GUI::Clicked()Clicked82,1845
-bool GUI::Cancelled()Cancelled87,1896
-bool GUI::Rolled()Rolled92,1946
-bool GUI::Closed()Closed97,1997
-void GUI::CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)CursorPositionCallback102,2066
-void GUI::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)MouseButtonCallback108,2229
-void GUI::KeyboardKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)KeyboardKeyCallback119,2508
-GUI::~GUI()~GUI130,2777
-void GUI::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)DrawBoard135,2817
-void GUI::DrawCell(int i, const Cell &c)DrawCell173,3809
-void GUI::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)DrawTriangle234,4958
-void GUI::DrawTriangle(Point p1, Point p2, Point p3)DrawTriangle251,5487
-void GUI::DrawRectangle(int x1, int y1, int x2, int y2)DrawRectangle256,5601
-void GUI::DrawRectangle(Point p1, Point p2)DrawRectangle274,6128
-void GUI::DrawLine(int x1, int y1, int x2, int y2)DrawLine279,6222
-void GUI::DrawLine(Point p1, Point p2)DrawLine297,6769
-void GUI::DrawCircle(int x, int y, int radius, bool color)DrawCircle302,6853
-void GUI::DrawCircle(Point p, int radius, bool color)DrawCircle345,8057
-void GUI::SetColor(int r, int g, int b, bool background)SetColor350,8159
-void GUI::SetColor(Color c, bool background)SetColor359,8352
-float GUI::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)TriangleArea364,8445
-float GUI::TriangleArea(Point p1, Point p2, Point p3)TriangleArea369,8596
-int GUI::CellNumber()CellNumber374,8718
+void GUI::PollEvents()PollEvents67,1691
+void GUI::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board)UpdateInteface72,1746
+bool GUI::Clicked()Clicked82,1966
+bool GUI::Cancelled()Cancelled87,2020
+bool GUI::Rolled()Rolled92,2073
+bool GUI::Closed()Closed97,2127
+void GUI::CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)CursorPositionCallback102,2199
+void GUI::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)MouseButtonCallback108,2368
+void GUI::KeyboardKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)KeyboardKeyCallback119,2655
+GUI::~GUI()~GUI130,2932
+void GUI::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)DrawBoard135,2975
+void GUI::DrawCell(int i, const Cell &c)DrawCell173,4018
+void GUI::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)DrawTriangle234,5192
+void GUI::DrawTriangle(Point p1, Point p2, Point p3)DrawTriangle251,5745
+void GUI::DrawRectangle(int x1, int y1, int x2, int y2)DrawRectangle256,5862
+void GUI::DrawRectangle(Point p1, Point p2)DrawRectangle274,6416
+void GUI::DrawLine(int x1, int y1, int x2, int y2)DrawLine279,6513
+void GUI::DrawLine(Point p1, Point p2)DrawLine297,7087
+void GUI::DrawCircle(int x, int y, int radius, bool color)DrawCircle302,7174
+void GUI::DrawCircle(Point p, int radius, bool color)DrawCircle345,8439
+void GUI::SetColor(int r, int g, int b, bool background)SetColor350,8544
+void GUI::SetColor(Color c, bool background)SetColor359,8741
+float GUI::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)TriangleArea364,8837
+float GUI::TriangleArea(Point p1, Point p2, Point p3)TriangleArea369,8991
+int GUI::CellNumber()CellNumber374,9116
 
 GUI\GUI.h,711
 class GUIGUI8,144
@@ -16758,7 +16759,7 @@ Color::Color(const char* hexCode)Color37,672
 Color::Color(int hexCode)Color43,761
 Cell::Cell(STATUS _status, int _tokenCount) :Cell68,1084
 
-Utility\Utility.h,634
+Utility\Utility.h,679
 struct PointPoint8,119
 	int x, y;x10,136
 	int x, y;y10,136
@@ -16774,11 +16775,12 @@ enum PROGRAM_MODEPROGRAM_MODE23,244
 	PIECE_SELECTION,PIECE_SELECTION26,277
 	MOVE_SELECTION,MOVE_SELECTION27,296
 	BEARING_OFF,BEARING_OFF28,314
-	MODE_COUNTMODE_COUNT29,329
-class CellCell32,348
-	STATUS status;status35,372
-	int tokenCount;tokenCount36,389
-class ColorColor41,467
-	int r, g, b;r44,492
-	int r, g, b;g44,492
-	int r, g, b;b44,492
+	BO_MOVE_SELECTION,BO_MOVE_SELECTION29,329
+	MODE_COUNTMODE_COUNT30,350
+class CellCell33,369
+	STATUS status;status36,393
+	int tokenCount;tokenCount37,410
+class ColorColor42,488
+	int r, g, b;r45,513
+	int r, g, b;g45,513
+	int r, g, b;b45,513
