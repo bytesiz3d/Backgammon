@@ -16,18 +16,12 @@ GUI::GUI() :
 {
     srand(time(0));
         
-    for (auto &c : mCell)
-        c.status = IDLE;
-
     mColors[HIGHLIGHTED] = "#B4D5FF";
     mColors[IDLE] = "#381704";
     mColors[SELECTED] = "#00FF00";
     mColors[BLACK] = 0x000000;
     mColors[WHITE] = 0xFFFFFF;
-
-    mCell[0] = Cell(WHITE, 15);
-    mCell[23] = Cell(BLACK, 15);
-
+    
     // Initialize the library
     glfwInit();
 

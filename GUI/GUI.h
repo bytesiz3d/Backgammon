@@ -22,10 +22,6 @@ class GUI
     static bool mSpacePressf;
     static bool mClosef;
 
-    // Board:
-    Cell mCell[24];
-    vector <int> mMoves;
-        
     // Events:
     static void CursorPositionCallback(GLFWwindow *window, double xpos, double ypos);
     static void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
