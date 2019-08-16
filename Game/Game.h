@@ -1,5 +1,18 @@
 #pragma once
-#include "../GUI/GUI.h"
+
+#if !defined(GUI)
+	#if defined(_GUI_GLFW_)	
+		#define GUI GUI_GLFW
+	#elif defined(_GUI_SFML_)
+		#define GUI GUI_SFML
+	#endif
+#endif
+
+#if defined(_GUI_GLFW_)
+	#include "../GUI/GUI_GLFW.h"
+#elif defined(_GUI_SFML_)
+	#include "../GUI/GUI_SFML.h"
+#endif
 
 //TODO: Implement Bearing Off
 

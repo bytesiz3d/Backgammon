@@ -1,16 +1,16 @@
-#include "GUI.h"
+#include "GUI_GLFW.h"
 
-int GUI::mX = 0;
-int GUI::mY = 0;
+int GUI_GLFW::mX = 0;
+int GUI_GLFW::mY = 0;
 
-bool GUI::mClosef = false;
+bool GUI_GLFW::mClosef = false;
 
-bool GUI::mLeftClickf = false;
-bool GUI::mCancelf = false;
+bool GUI_GLFW::mLeftClickf = false;
+bool GUI_GLFW::mCancelf = false;
 
-bool GUI::mSpacePressf = false;
+bool GUI_GLFW::mSpacePressf = false;
 
-GUI::GUI() :
+GUI_GLFW::GUI_GLFW() :
     mScreenWidth(1280), mScreenHeight(900), mCellWidth(100), mCellHeight(360),
     mTokenRadius(40), mBarWidth(80)
 {
@@ -58,12 +58,12 @@ GUI::GUI() :
     glLoadIdentity();
 }
 
-void GUI::PollEvents()
+void GUI_GLFW::PollEvents()
 {
     glfwPollEvents();
 }
 
-void GUI::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board)
+void GUI_GLFW::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board)
 {
     mLeftClickf = false;
     mCancelf = false;
@@ -73,33 +73,33 @@ void GUI::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board)
     glfwSwapBuffers(mWindow);
 }
 
-bool GUI::Clicked()
+bool GUI_GLFW::Clicked()
 {
     return mLeftClickf;
 }
 
-bool GUI::Cancelled()
+bool GUI_GLFW::Cancelled()
 {
     return mCancelf;
 }
 
-bool GUI::Rolled()
+bool GUI_GLFW::Rolled()
 {
     return mSpacePressf;
 }
 
-bool GUI::Closed()
+bool GUI_GLFW::Closed()
 {
     return glfwWindowShouldClose(mWindow);
 }
 
-void GUI::CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)
+void GUI_GLFW::CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)
 {
     mX = xpos, mY = ypos;
     //std::cout << " (" << xpos << ", " << ypos << ")\n";
 }
 
-void GUI::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
+void GUI_GLFW::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT)
         if (action == GLFW_PRESS)
@@ -110,7 +110,7 @@ void GUI::MouseButtonCallback(GLFWwindow *window, int button, int action, int mo
             mCancelf = true;
 }
 
-void GUI::KeyboardKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+void GUI_GLFW::KeyboardKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_SPACE)
         if (action == GLFW_PRESS)
@@ -121,12 +121,12 @@ void GUI::KeyboardKeyCallback(GLFWwindow *window, int key, int scancode, int act
             mCancelf = true;
 }
 
-GUI::~GUI()
+GUI_GLFW::~GUI_GLFW()
 {
     glfwTerminate();
 }
 
-void GUI::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)
+void GUI_GLFW::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)
 {
     switch (CURRENT_MODE)
     {
@@ -164,7 +164,7 @@ void GUI::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)
 
 }
 
-void GUI::DrawCell(int i, const Cell &c)
+void GUI_GLFW::DrawCell(int i, const Cell &c)
 {
     int quad = i / 6;
     Color cellColor = mColors[c.status];
@@ -225,7 +225,7 @@ void GUI::DrawCell(int i, const Cell &c)
     DrawLine(p1, p3), DrawLine(p2, p3);
 }
 
-void GUI::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
+void GUI_GLFW::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
 {
     float vertices[] =
         {
@@ -242,12 +242,12 @@ void GUI::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
     glDisableClientState(GL_VERTEX_ARRAY); // tell OpenGL that you're finished using the vertex array attributes
 }
 
-void GUI::DrawTriangle(Point p1, Point p2, Point p3)
+void GUI_GLFW::DrawTriangle(Point p1, Point p2, Point p3)
 {
     DrawTriangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
 }
 
-void GUI::DrawRectangle(int x1, int y1, int x2, int y2)
+void GUI_GLFW::DrawRectangle(int x1, int y1, int x2, int y2)
 {
     float vertices[] =
         {
@@ -265,12 +265,12 @@ void GUI::DrawRectangle(int x1, int y1, int x2, int y2)
     glDisableClientState(GL_VERTEX_ARRAY); // tell OpenGL that you're finished using the vertex array attributes
 }
 
-void GUI::DrawRectangle(Point p1, Point p2)
+void GUI_GLFW::DrawRectangle(Point p1, Point p2)
 {
     DrawRectangle(p1.x, p1.y, p2.x, p2.y);
 }
 
-void GUI::DrawLine(int x1, int y1, int x2, int y2)
+void GUI_GLFW::DrawLine(int x1, int y1, int x2, int y2)
 {
     float vertices[] =
         {
@@ -288,12 +288,12 @@ void GUI::DrawLine(int x1, int y1, int x2, int y2)
     glDisable(GL_LINE_SMOOTH);
 }
 
-void GUI::DrawLine(Point p1, Point p2)
+void GUI_GLFW::DrawLine(Point p1, Point p2)
 {
     DrawLine(p1.x, p1.y, p2.x, p2.y);
 }
 
-void GUI::DrawCircle(int x, int y, int radius, bool color)
+void GUI_GLFW::DrawCircle(int x, int y, int radius, bool color)
 {
     if (color)
         SetColor("#000000");
@@ -336,12 +336,12 @@ void GUI::DrawCircle(int x, int y, int radius, bool color)
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void GUI::DrawCircle(Point p, int radius, bool color)
+void GUI_GLFW::DrawCircle(Point p, int radius, bool color)
 {
     DrawCircle(p.x, p.y, radius, color);
 }
 
-void GUI::SetColor(int r, int g, int b, bool background)
+void GUI_GLFW::SetColor(int r, int g, int b, bool background)
 {
     if (background)
         glClearColor(r / 255.0, g / 255.0, b / 255.0, 1);
@@ -350,22 +350,22 @@ void GUI::SetColor(int r, int g, int b, bool background)
         glColor3f(r / 255.0, g / 255.0, b / 255.0);
 }
 
-void GUI::SetColor(Color c, bool background)
+void GUI_GLFW::SetColor(Color c, bool background)
 {
     SetColor(c.r, c.g, c.b, background);
 }
 
-float GUI::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)
+float GUI_GLFW::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)
 {
     return abs((x1*(y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
 }
 
-float GUI::TriangleArea(Point p1, Point p2, Point p3)
+float GUI_GLFW::TriangleArea(Point p1, Point p2, Point p3)
 {
     return TriangleArea(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
 }
 
-int GUI::CellNumber()
+int GUI_GLFW::CellNumber()
 {
     // P (mX, mY)
     Point P = { mX, mY };

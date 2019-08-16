@@ -1,4 +1,3 @@
-#include "../GUI/GUI.h"
 #include "../Game/Game.h"
 
 int main(void)
