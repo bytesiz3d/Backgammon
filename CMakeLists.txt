@@ -67,10 +67,14 @@ endif()
 # SFML
 if(BKG_USE_SFML)
   add_subdirectory(deps/SFML)
-  target_link_libraries(Backgammon ${SFML_LIBRARIES})
+  target_link_libraries(Backgammon sfml-system sfml-main sfml-window sfml-graphics sfml-audio)
+
+  set(SFML_BUILD_NETWORK FALSE CACHE BOOL "No need to build the Network module." FORCE)
 endif()
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Backgammon)
+
+target_include_directories(Backgammon PRIVATE deps/SFML/include)
 
 target_compile_definitions(Backgammon PRIVATE UNICODE _UNICODE _CRT_SECURE_NO_WARNINGS)
 
