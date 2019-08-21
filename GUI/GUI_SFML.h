@@ -1,8 +1,13 @@
 #pragma once
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include "../Utility/Utility.h"
 
 class GUI_SFML 
 {    
+    sf::RenderWindow *mWindow;
+
     // Interface Data Members:
     int mScreenWidth, mScreenHeight,
 	mCellWidth, mCellHeight,
