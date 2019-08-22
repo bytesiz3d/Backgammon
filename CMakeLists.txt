@@ -74,7 +74,7 @@ if(BKG_USE_SFML)
 
   set(SFML_BUILD_NETWORK        FALSE CACHE BOOL "No need to build the Network module." FORCE)
   set(BUILD_SHARED_LIBS         FALSE CACHE BOOL "Static linking." FORCE)
-  set(SMFL_USE_STATIC_STD_LIBS   TRUE CACHE BOOL "Static linking." FORCE)
+  set(SFML_USE_STATIC_STD_LIBS   TRUE CACHE BOOL "Static linking." FORCE)
   set(SFML_USE_SYSTEM_DEPS       TRUE CACHE BOOL "Use system dependencies." FORCE)
   
   add_subdirectory(deps/SFML)

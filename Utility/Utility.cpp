@@ -16,7 +16,7 @@ Color::Color(string hexCode)
 	    c += 'z' - 'Z';
     }
 
-    int rgb[3] = { 0 };
+    unsigned int rgb[3] = { 0 };
 
     for (int i = 0; i < 6; i += 2)
     {
@@ -40,7 +40,7 @@ Color::Color(const char* hexCode)
     *this = Color(hex);
 }
 
-Color::Color(int hexCode)
+Color::Color(unsigned int hexCode)
 {
     r = 0;
     g = 0;

@@ -42,10 +42,10 @@ public:
 class Color
 {
 public:
-    int r, g, b;
+    unsigned int r, g, b;
 
     Color();
     Color(string hexCode);
     Color(const char* hexCode);
-    Color(int hexCode);
+    Color(unsigned int hexCode);
 };
