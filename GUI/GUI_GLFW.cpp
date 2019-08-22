@@ -19,8 +19,8 @@ GUI_GLFW::GUI_GLFW() :
     mColors[HIGHLIGHTED] = "#B4D5FF";
     mColors[IDLE] = "#381704";
     mColors[SELECTED] = "#00FF00";
-    mColors[BLACK] = 0x000000;
-    mColors[WHITE] = 0xFFFFFF;
+    mColors[BLACK] = "#000000";
+    mColors[WHITE] = "#FFFFFF";
     
     // Initialize the library
     glfwInit();
@@ -135,7 +135,7 @@ void GUI_GLFW::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)
         break;
 
     case PIECE_SELECTION:
-        SetColor(0xD26AD9, true);
+        SetColor("#D26AD9", true);
         break;
 
     case MOVE_SELECTION:
@@ -143,7 +143,7 @@ void GUI_GLFW::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)
         break;
         
     case BO_MOVE_SELECTION:
-        SetColor(0xFF0000, true);
+        SetColor("#FF0000", true);
         break;
     }
     glClear(GL_COLOR_BUFFER_BIT);

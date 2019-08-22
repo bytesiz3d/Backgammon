@@ -291,46 +291,6 @@ void GUI_SFML::DrawCell(int i, const Cell & c)
     mWindow->draw(cellTriangle);    
 }
 
-void GUI_SFML::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
-{
-}
-
-void GUI_SFML::DrawTriangle(Point p1, Point p2, Point p3)
-{
-}
-
-void GUI_SFML::DrawRectangle(int x1, int y1, int x2, int y2)
-{
-}
-
-void GUI_SFML::DrawRectangle(Point p1, Point p2)
-{
-}
-
-void GUI_SFML::DrawLine(int x1, int y1, int x2, int y2)
-{
-}
-
-void GUI_SFML::DrawLine(Point p1, Point p2)
-{
-}
-
-void GUI_SFML::DrawCircle(int x, int y, int radius, bool black)
-{
-}
-
-void GUI_SFML::DrawCircle(Point p, int radius, bool black)
-{
-}
-
-void GUI_SFML::SetColor(int r, int g, int b, bool background)
-{
-}
-
-void GUI_SFML::SetColor(Color c, bool background)
-{
-}
-
 float GUI_SFML::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)
 {
     return abs((x1*(y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
