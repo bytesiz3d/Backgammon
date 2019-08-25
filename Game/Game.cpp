@@ -8,9 +8,11 @@ void Game::ResetAllCells(STATUS PLAYER)
     for (auto &c : mCell)
         if (c.status == HIGHLIGHTED || c.status == SELECTED)
             if (c.tokenCount == 0)
-                c.status = IDLE;
+                c.status = IDLE,
+                c.player = IDLE;
             else
-                c.status = PLAYER;
+                c.status = PLAYER,
+                c.player = PLAYER;
 }
 
 void Game::ShowMoves(int click, STATUS PLAYER)
@@ -155,7 +157,7 @@ void Game::FillMoves()
 void Game::RemoveChosenMove(int previousCell, int chosenCell, STATUS PLAYER)
 {
     int validMove = abs(chosenCell - previousCell);
-    vector<int>::iterator moveItr = mMoves.begin();
+    std::vector<int>::iterator moveItr = mMoves.begin();
 
     for (; moveItr < mMoves.end(); moveItr++)
         if (*moveItr == validMove)
@@ -166,7 +168,7 @@ void Game::RemoveChosenMove(int previousCell, int chosenCell, STATUS PLAYER)
         moveItr = mMoves.begin();
         int smallestValidMove = 999;
 
-        for (vector<int>::iterator it = mMoves.begin(); it < mMoves.end(); it++)
+        for (std::vector<int>::iterator it = mMoves.begin(); it < mMoves.end(); it++)
         {
             if (*it > validMove && *it < smallestValidMove)
             {
@@ -182,14 +184,17 @@ void Game::RemoveChosenMove(int previousCell, int chosenCell, STATUS PLAYER)
 void Game::DoMove(int previousCell, int chosenCell, STATUS PLAYER)
 {
     if (--mCell[previousCell].tokenCount == 0)
-        mCell[previousCell].status = IDLE;
+        mCell[previousCell].status = IDLE,
+        mCell[previousCell].player = IDLE;
     else
-        mCell[previousCell].status = PLAYER;
+        mCell[previousCell].status = PLAYER,
+        mCell[previousCell].player = PLAYER;
 
     if (chosenCell > -1 && chosenCell < 24)
     {
         mCell[chosenCell].tokenCount++;
         mCell[chosenCell].status = PLAYER;
+        mCell[chosenCell].player = PLAYER;
     }
 }
 
@@ -242,9 +247,9 @@ Game::Game()
 {
     pGUI = new GUI;
     mBearingOff[0] = mBearingOff[1] = false;
-        
-    mCell[0] = Cell(WHITE, 15);
-    mCell[23] = Cell(BLACK, 15);
+
+    mCell[0] = Cell(WHITE, WHITE, 15);
+    mCell[23] = Cell(BLACK, BLACK, 15);
 }
 
 void Game::Play()
@@ -282,13 +287,14 @@ void Game::Play()
         
     while (!pGUI->Closed())
     {
+    
         // Poll for and process events
         pGUI->PollEvents();
 
         click = pGUI->CellNumber();
 
         switch (mMode)
-        {
+        {        
         case STANDBY:
 
             // If I didn't roll
@@ -377,6 +383,7 @@ void Game::Play()
             mCell[click].status = SELECTED;
 
             // Start Move Selection
+            mCell[prevCell].tokenCount--;
             mMode = MOVE_SELECTION;
 
             break;
@@ -389,12 +396,17 @@ void Game::Play()
             if (pGUI->Cancelled())
             {
                 // Reset all cells
+		mCell[prevCell].tokenCount++;
+		pGUI->DropToken();
                 ResetAllCells(PLAYER);
 
-                // Return to Piece Selection:
+                // Return to Piece Selection
                 mMode = PIECE_SELECTION;
                 break;
             }
+
+	    // Pick up the last token
+	    pGUI->PickupToken();
 
             // Didn't click or clicked wrong
             if (!pGUI->Clicked() || click < 0)
@@ -408,11 +420,15 @@ void Game::Play()
             RemoveChosenMove(prevCell, click, PLAYER);
 
             // Move the current cell
+	    mCell[prevCell].tokenCount++;
             DoMove(prevCell, click, PLAYER);
 
             // Reset all cells
             ResetAllCells(PLAYER);
 
+            // Drop the token
+            pGUI->DropToken();
+            
             // Check Bearing Off
             if (!mBearingOff[PLAYER])
                 CheckBearingOff(PLAYER);
@@ -524,11 +540,11 @@ void Game::Play()
             // Return to Bearing Off
             mMode = BEARING_OFF;                    
             break;
+	}
+                        
+	pGUI->UpdateInteface(mMode, mCell, PLAYER);
 
-        }
-                
-        pGUI->UpdateInteface(mMode, mCell);
-    }
+    }    
 }
 
 Game::~Game()

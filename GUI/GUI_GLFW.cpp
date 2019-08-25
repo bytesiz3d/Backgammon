@@ -63,7 +63,7 @@ void GUI_GLFW::PollEvents()
     glfwPollEvents();
 }
 
-void GUI_GLFW::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board)
+void GUI_GLFW::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board, STATUS PLAYER)
 {
     mLeftClickf = false;
     mCancelf = false;

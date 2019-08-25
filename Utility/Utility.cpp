@@ -65,7 +65,7 @@ Color::Color(unsigned int hexCode)
     hexCode /= 16;
 }
 
-Cell::Cell(STATUS _status, int _tokenCount) :
-    status(_status), tokenCount(_tokenCount)
+Cell::Cell(STATUS _status, STATUS _player, int _tokenCount) :
+    status(_status), player(_player), tokenCount(_tokenCount)
 {
 }

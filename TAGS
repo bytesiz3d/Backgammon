@@ -6,23 +6,23 @@ bool Game::Removable(STATUS PLAYER, int& largestMove, int& furthestCell)Removab
 void Game::ShowRemovableMoves(STATUS PLAYER, int largestMove, int furthestCell)ShowRemovableMoves87,2064
 void Game::FillMoves()FillMoves139,3190
 void Game::RemoveChosenMove(int previousCell, int chosenCell, STATUS PLAYER)RemoveChosenMove155,3603
-void Game::DoMove(int previousCell, int chosenCell, STATUS PLAYER)DoMove182,4331
-void Game::CheckBearingOff(STATUS PLAYER)CheckBearingOff196,4701
-Game::Game()Game240,5552
-void Game::Play()Play250,5739
-Game::~Game()~Game534,14360
+void Game::DoMove(int previousCell, int chosenCell, STATUS PLAYER)DoMove182,4341
+void Game::CheckBearingOff(STATUS PLAYER)CheckBearingOff198,4799
+Game::Game()Game242,5650
+void Game::Play()Play252,5851
+Game::~Game()~Game546,14741
 
-Game\Game.h,252
+Game\Game.h,256
 		#define GUI GUI5,62
 		#define GUI GUI7,114
-class GameGame19,314
-    GUI *pGUI;pGUI21,329
-    Cell mCell[24];mCell24,361
-    vector <int> mMoves;mMoves26,392
-    bool mBearingOff[2];mBearingOff28,428
-    PROGRAM_MODE mMode;mMode30,456
+class GameGame19,315
+    GUI *pGUI;pGUI21,330
+    Cell mCell[24];mCell24,362
+    std::vector<int> mMoves;mMoves26,393
+    bool mBearingOff[2];mBearingOff28,433
+    PROGRAM_MODE mMode;mMode30,461
 
-GUI\GUI_GLFW.cpp,2163
+GUI\GUI_GLFW.cpp,2178
 int GUI_GLFW::mX = 0;mX3,25
 int GUI_GLFW::mY = 0;mY4,48
 bool GUI_GLFW::mClosef = false;mClosef6,73
@@ -30,80 +30,106 @@ bool GUI_GLFW::mLeftClickf = false;mLeftClickf8,108
 bool GUI_GLFW::mCancelf = false;mCancelf9,145
 bool GUI_GLFW::mSpacePressf = false;mSpacePressf11,181
 GUI_GLFW::GUI_GLFW() :GUI_GLFW13,221
-void GUI_GLFW::PollEvents()PollEvents61,1644
-void GUI_GLFW::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board)UpdateInteface66,1704
-bool GUI_GLFW::Clicked()Clicked76,1929
-bool GUI_GLFW::Cancelled()Cancelled81,1988
-bool GUI_GLFW::Rolled()Rolled86,2046
-bool GUI_GLFW::Closed()Closed91,2105
-void GUI_GLFW::CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)CursorPositionCallback96,2182
-void GUI_GLFW::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)MouseButtonCallback102,2361
-void GUI_GLFW::KeyboardKeyCallback(GLFWwindow *window, int key, int scancode, int action, int moKeyboardKeyCallback113,2681
-GUI_GLFW::~GUI_GLFW()~GUI_GLFW124,2991
-void GUI_GLFW::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)DrawBoard129,3044
-void GUI_GLFW::DrawCell(int i, const Cell &c)DrawCell167,4162
-void GUI_GLFW::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)DrawTriangle228,5523
-void GUI_GLFW::DrawTriangle(Point p1, Point p2, Point p3)DrawTriangle245,6128
-void GUI_GLFW::DrawRectangle(int x1, int y1, int x2, int y2)DrawRectangle250,6250
-void GUI_GLFW::DrawRectangle(Point p1, Point p2)DrawRectangle268,6851
-void GUI_GLFW::DrawLine(int x1, int y1, int x2, int y2)DrawLine273,6953
-void GUI_GLFW::DrawLine(Point p1, Point p2)DrawLine291,7560
-void GUI_GLFW::DrawCircle(int x, int y, int radius, bool color)DrawCircle296,7652
-void GUI_GLFW::DrawCircle(Point p, int radius, bool color)DrawCircle339,8978
-void GUI_GLFW::SetColor(int r, int g, int b, bool background)SetColor344,9088
-void GUI_GLFW::SetColor(Color c, bool background)SetColor353,9304
-float GUI_GLFW::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)TriangleArea358,9405
-float GUI_GLFW::TriangleArea(Point p1, Point p2, Point p3)TriangleArea363,9564
-int GUI_GLFW::CellNumber()CellNumber368,9694
+void GUI_GLFW::PollEvents()PollEvents61,1646
+void GUI_GLFW::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board, STATUS PLAYER)UpdateInteface66,1706
+bool GUI_GLFW::Clicked()Clicked76,1946
+bool GUI_GLFW::Cancelled()Cancelled81,2005
+bool GUI_GLFW::Rolled()Rolled86,2063
+bool GUI_GLFW::Closed()Closed91,2122
+void GUI_GLFW::CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)CursorPositionCallback96,2199
+void GUI_GLFW::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)MouseButtonCallback102,2378
+void GUI_GLFW::KeyboardKeyCallback(GLFWwindow *window, int key, int scancode, int action, int moKeyboardKeyCallback113,2698
+GUI_GLFW::~GUI_GLFW()~GUI_GLFW124,3008
+void GUI_GLFW::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board)DrawBoard129,3061
+void GUI_GLFW::DrawCell(int i, const Cell &c)DrawCell167,4181
+void GUI_GLFW::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)DrawTriangle228,5542
+void GUI_GLFW::DrawTriangle(Point p1, Point p2, Point p3)DrawTriangle245,6147
+void GUI_GLFW::DrawRectangle(int x1, int y1, int x2, int y2)DrawRectangle250,6269
+void GUI_GLFW::DrawRectangle(Point p1, Point p2)DrawRectangle268,6870
+void GUI_GLFW::DrawLine(int x1, int y1, int x2, int y2)DrawLine273,6972
+void GUI_GLFW::DrawLine(Point p1, Point p2)DrawLine291,7579
+void GUI_GLFW::DrawCircle(int x, int y, int radius, bool color)DrawCircle296,7671
+void GUI_GLFW::DrawCircle(Point p, int radius, bool color)DrawCircle339,8997
+void GUI_GLFW::SetColor(int r, int g, int b, bool background)SetColor344,9107
+void GUI_GLFW::SetColor(Color c, bool background)SetColor353,9323
+float GUI_GLFW::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)TriangleArea358,9424
+float GUI_GLFW::TriangleArea(Point p1, Point p2, Point p3)TriangleArea363,9583
+int GUI_GLFW::CellNumber()CellNumber368,9713
 
-GUI\GUI_GLFW.h,652
+GUI\GUI_GLFW.h,782
 class GUI_GLFWGUI_GLFW5,74
-	GLFWwindow *mWindow;mWindow8,122
-	int mScreenWidth, mScreenHeight,mScreenWidth10,147
-	int mScreenWidth, mScreenHeight,mScreenHeight10,147
-		mCellWidth, mCellHeight,mCellWidth11,182
-		mCellWidth, mCellHeight,mCellHeight11,182
-		mTokenRadius, mBarWidth;mTokenRadius12,210
-		mTokenRadius, mBarWidth;mBarWidth12,210
-	Color mColors[STATUS_COUNT];mColors14,240
-	static int mX, mY;mX17,295
-	static int mX, mY;mY17,295
-	static bool mLeftClickf, mCancelf;mLeftClickf18,316
-	static bool mLeftClickf, mCancelf;mCancelf18,316
-	static bool mSpacePressf;mSpacePressf19,353
-	static bool mClosef;mClosef20,381
+    GLFWwindow *mWindow;mWindow8,125
+    int mScreenWidth, mScreenHeight,mScreenWidth10,153
+    int mScreenWidth, mScreenHeight,mScreenHeight10,153
+	mCellWidth, mCellHeight,mCellWidth11,191
+	mCellWidth, mCellHeight,mCellHeight11,191
+	mTokenRadius, mBarWidth;mTokenRadius12,218
+	mTokenRadius, mBarWidth;mBarWidth12,218
+    Color mColors[STATUS_COUNT];mColors14,247
+    static int mX, mY;mX17,308
+    static int mX, mY;mY17,308
+    static bool mLeftClickf, mCancelf;mLeftClickf18,332
+    static bool mLeftClickf, mCancelf;mCancelf18,332
+    static bool mSpacePressf;mSpacePressf19,372
+    static bool mClosef;mClosef20,403
+    inline void PickupToken() {;}PickupToken66,1937
+    inline void DropToken() {;}DropToken67,1972
 
-GUI\GUI_SFML.cpp,73
-GUI_SFML::GUI_SFML()GUI_SFML5,29
-GUI_SFML::~GUI_SFML()~GUI_SFML10,61
+GUI\GUI_SFML.cpp,1191
+int GUI_SFML::mX = 0;mX3,25
+int GUI_SFML::mY = 0;mY4,48
+bool GUI_SFML::mClosef = false;mClosef6,73
+bool GUI_SFML::mLeftClickf = false;mLeftClickf8,108
+bool GUI_SFML::mCancelf = false;mCancelf9,145
+bool GUI_SFML::mSpacePressf = false;mSpacePressf11,181
+bool GUI_SFML::mPickupf = false;mPickupf12,219
+GUI_SFML::GUI_SFML() :GUI_SFML14,255
+int GUI_SFML::CellNumber()CellNumber42,1135
+void GUI_SFML::PollEvents()PollEvents106,2750
+void GUI_SFML::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell * board, STATUS PLAYER)UpdateInteface150,3520
+bool GUI_SFML::Clicked()Clicked178,4173
+bool GUI_SFML::Cancelled()Cancelled183,4232
+bool GUI_SFML::Rolled()Rolled188,4290
+bool GUI_SFML::Closed()Closed193,4349
+GUI_SFML::~GUI_SFML()~GUI_SFML198,4403
+void GUI_SFML::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell * board)DrawBoard203,4455
+void GUI_SFML::DrawCell(int i, const Cell & c)DrawCell248,5721
+float GUI_SFML::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)TriangleArea337,7971
+float GUI_SFML::TriangleArea(Point p1, Point p2, Point p3)TriangleArea342,8130
+void GUI_SFML::PickupToken()PickupToken347,8260
+void GUI_SFML::DropToken()DropToken352,8324
 
-GUI\GUI_SFML.h,634
-class GUI_SFML GUI_SFML4,49
-    int mScreenWidth, mScreenHeight,mScreenWidth7,105
-    int mScreenWidth, mScreenHeight,mScreenHeight7,105
-	mCellWidth, mCellHeight,mCellWidth8,143
-	mCellWidth, mCellHeight,mCellHeight8,143
-	mTokenRadius, mBarWidth;mTokenRadius9,170
-	mTokenRadius, mBarWidth;mBarWidth9,170
-    Color mColors[STATUS_COUNT];mColors11,199
-    static int mX, mY;mX14,260
-    static int mX, mY;mY14,260
-    static bool mLeftClickf, mCancelf;mLeftClickf15,284
-    static bool mLeftClickf, mCancelf;mCancelf15,284
-    static bool mSpacePressf;mSpacePressf16,324
-    static bool mClosef;mClosef17,355
+GUI\GUI_SFML.h,827
+class GUI_SFML GUI_SFML7,135
+    sf::RenderWindow *mWindow;mWindow10,191
+    sf::Texture mTexture[2];mTexture11,223
+    sf::Sprite mFloatingToken;mFloatingToken12,253
+    int mScreenWidth, mScreenHeight,mScreenWidth14,291
+    int mScreenWidth, mScreenHeight,mScreenHeight14,291
+	mCellWidth, mCellHeight,mCellWidth15,329
+	mCellWidth, mCellHeight,mCellHeight15,329
+	mTokenRadius, mBarWidth;mTokenRadius16,356
+	mTokenRadius, mBarWidth;mBarWidth16,356
+    Color mColors[STATUS_COUNT];mColors18,385
+    static int mX, mY;mX21,446
+    static int mX, mY;mY21,446
+    static bool mLeftClickf, mCancelf;mLeftClickf22,470
+    static bool mLeftClickf, mCancelf;mCancelf22,470
+    static bool mSpacePressf;mSpacePressf23,510
+    static bool mClosef;mClosef24,541
+    static bool mPickupf;mPickupf25,567
 
 source\main.cpp,25
 int main(void)main3,29
 
-Utility\Utility.cpp,211
+Utility\Utility.cpp,236
 Color::Color()Color3,24
 Color::Color(string hexCode)Color8,68
-Color::Color(const char* hexCode)Color37,706
-Color::Color(int hexCode)Color43,801
-Cell::Cell(STATUS _status, int _tokenCount) :Cell68,1169
+Color::Color(const char* hexCode)Color37,715
+Color::Color(unsigned int hexCode)Color43,810
+Cell::Cell(STATUS _status, STATUS _player, int _tokenCount) :Cell68,1187
 
-Utility\Utility.h,736
+Utility\Utility.h,796
 struct PointPoint8,119
     int x, y;x10,136
     int x, y;y10,136
@@ -123,8 +149,9 @@ enum PROGRAM_MODEPROGRAM_MODE23,265
     MODE_COUNTMODE_COUNT30,386
 class CellCell33,408
     STATUS status;status36,432
-    int tokenCount;tokenCount37,452
-class ColorColor42,536
-    int r, g, b;r45,561
-    int r, g, b;g45,561
-    int r, g, b;b45,561
+    STATUS player;player37,452
+    int tokenCount;tokenCount38,472
+class ColorColor43,579
+    unsigned int r, g, b;r46,604
+    unsigned int r, g, b;g46,604
+    unsigned int r, g, b;b46,604

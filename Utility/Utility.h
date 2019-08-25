@@ -34,9 +34,10 @@ class Cell
 {
 public:
     STATUS status;
+    STATUS player;
     int tokenCount;
 
-    Cell(STATUS _status = IDLE, int _tokenCount = 0);
+    Cell(STATUS _status = IDLE, STATUS _player = IDLE, int _tokenCount = 0);
 };
 
 class Color

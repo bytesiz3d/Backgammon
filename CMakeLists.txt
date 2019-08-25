@@ -4,8 +4,8 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
 add_compile_options(-w)
 
-option(BKG_USE_GLFW "Use the GLFW Implementation of the GUI" ON)
-option(BKG_USE_SFML "Use the SFML Implementation of the GUI" OFF)
+option(BKG_USE_GLFW "Use the GLFW Implementation of the GUI" OFF)
+option(BKG_USE_SFML "Use the SFML Implementation of the GUI" ON)
 
 # Choosing the Implemntation:
 if(BKG_USE_GLFW AND (BKG_USE_SFML))

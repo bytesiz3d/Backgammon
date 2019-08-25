@@ -6,9 +6,10 @@
 
 class GUI_SFML 
 {    
-    sf::RenderWindow *mWindow;
-
     // Interface Data Members:
+    sf::RenderWindow *mWindow;
+    sf::Texture mTexture[2];
+    
     int mScreenWidth, mScreenHeight,
 	mCellWidth, mCellHeight,
 	mTokenRadius, mBarWidth;
@@ -20,7 +21,8 @@ class GUI_SFML
     static bool mLeftClickf, mCancelf;
     static bool mSpacePressf;
     static bool mClosef;
-
+    static bool mPickupf;
+    
     // Drawing Functions:
     void DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell *board);
     void DrawCell(int i, const Cell& c); //i ==> cellNumber
@@ -38,13 +40,16 @@ public:
 
     // Interface Functions:
     void PollEvents();
-    void UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board);
+    void UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board, STATUS PLAYER);
 
     // Flags:
     bool Clicked();
     bool Cancelled();
     bool Rolled();
     bool Closed();
+
+    void PickupToken();
+    void DropToken();
 
     ~GUI_SFML();
 };

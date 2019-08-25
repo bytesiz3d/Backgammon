@@ -14,8 +14,6 @@
 	#include "../GUI/GUI_SFML.h"
 #endif
 
-//TODO: Implement Bearing Off
-
 class Game
 {
     GUI *pGUI;
@@ -23,7 +21,7 @@ class Game
     // Board
     Cell mCell[24];
         
-    vector <int> mMoves;
+    std::vector<int> mMoves;
         
     bool mBearingOff[2];
 

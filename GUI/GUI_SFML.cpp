@@ -9,25 +9,34 @@ bool GUI_SFML::mLeftClickf = false;
 bool GUI_SFML::mCancelf = false;
 
 bool GUI_SFML::mSpacePressf = false;
-
+bool GUI_SFML::mPickupf = false;
 
 GUI_SFML::GUI_SFML() :
     mScreenWidth(1280), mScreenHeight(900), mCellWidth(100), mCellHeight(360),
-    mTokenRadius(40), mBarWidth(80)
+    mTokenRadius(45), mBarWidth(80)
 {
     srand(time(0));
 
+    // Setting the color environment:
     mColors[HIGHLIGHTED] = "#B4D5FF";
     mColors[IDLE] = "#381704";
     mColors[SELECTED] = "#00FF00";
-    mColors[BLACK] = "#000000";
-    mColors[WHITE] = "#FFFFFF";
+    mColors[BLACK] = mColors[IDLE];
+    mColors[WHITE] = mColors[IDLE];
 
+    // Initializing the window:
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     
     mWindow = new sf::RenderWindow(sf::VideoMode(mScreenWidth, mScreenHeight), "Backgammon!", sf::Style::Titlebar | sf::Style::Close, settings);
 
+    // Loading the textures:
+    if (!mTexture[WHITE].loadFromFile("../assets/white.png") ||
+	!mTexture[BLACK].loadFromFile("../assets/black.png"))
+    {
+	std::cerr << "Failed to load textures\n";
+	mClosef = true;
+    }
 }
 
 int GUI_SFML::CellNumber()
@@ -138,15 +147,31 @@ void GUI_SFML::PollEvents()
     
 }
 
-void GUI_SFML::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell * board)
+void GUI_SFML::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell * board, STATUS PLAYER)
 {
     mLeftClickf = false;
     mCancelf = false;
     mSpacePressf = false;
 
-    // "Show"
+    // Draw:
     mWindow->clear();
     DrawBoard(CURRENT_MODE, board);
+
+    // Handling the token:
+    if (mPickupf)
+    {
+	sf::Sprite token;
+	token.setTexture(mTexture[PLAYER]);
+	token.scale(sf::Vector2f(0.45f, 0.45f));
+	token.setOrigin(sf::Vector2f(100, 100));
+
+	token.setPosition(sf::Vector2f(
+			      sf::Mouse::getPosition(*mWindow).x, sf::Mouse::getPosition(*mWindow).y));
+
+	mWindow->draw(token);
+    }
+    
+    // Swap Buffers:
     mWindow->display();
 }
 
@@ -237,7 +262,7 @@ void GUI_SFML::DrawCell(int i, const Cell & c)
     case 0:
         //Top Left:
         break;
-
+	
     case 1:
         //Top Right:
         p1.x += 6 * mCellWidth + mBarWidth;
@@ -288,7 +313,25 @@ void GUI_SFML::DrawCell(int i, const Cell & c)
     cellTriangle.setPoint(1, sf::Vector2f(p2.x, p2.y));
     cellTriangle.setPoint(2, sf::Vector2f(p3.x, p3.y));
 
-    mWindow->draw(cellTriangle);    
+    mWindow->draw(cellTriangle);
+
+    for (int i = 0; i < c.tokenCount; i++)
+    {
+	if (i < 4)
+	{
+	    sf::Sprite token;
+	    token.setTexture(mTexture[c.player]);
+	    token.scale(sf::Vector2f(0.45, 0.45));
+	    token.setOrigin(sf::Vector2f(100, 100));
+
+	    if (p3.y < mScreenHeight / 2)
+		token.setPosition(sf::Vector2f(p3.x, mTokenRadius + (2 * mTokenRadius - 2) * i));
+	    else
+		token.setPosition(sf::Vector2f(p3.x, (mScreenHeight - mTokenRadius) - (2 * mTokenRadius - 2) * i));
+
+	    mWindow->draw(token);
+	}
+    }
 }
 
 float GUI_SFML::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)
@@ -299,4 +342,14 @@ float GUI_SFML::TriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)
 float GUI_SFML::TriangleArea(Point p1, Point p2, Point p3)
 {
     return TriangleArea(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+}
+
+void GUI_SFML::PickupToken()
+{    
+    mPickupf = true;
+}
+
+void GUI_SFML::DropToken()
+{
+    mPickupf = false;
 }
