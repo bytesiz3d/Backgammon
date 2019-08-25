@@ -3,13 +3,14 @@
 #include <cmath>
 #include <ctime>
 #include <vector>
-using namespace std;
 
+// 2D pixel position
 struct Point
 {
     int x, y;
 };
 
+// Cell state
 enum STATUS
 {
     WHITE,
@@ -20,6 +21,7 @@ enum STATUS
     STATUS_COUNT
 };
 
+// Program state
 enum PROGRAM_MODE
 {
     STANDBY,
@@ -30,6 +32,7 @@ enum PROGRAM_MODE
     MODE_COUNT
 };
 
+// Cell handling
 class Cell
 {
 public:
@@ -40,13 +43,14 @@ public:
     Cell(STATUS _status = IDLE, STATUS _player = IDLE, int _tokenCount = 0);
 };
 
+// Color handling
 class Color
 {
 public:
     unsigned int r, g, b;
 
     Color();
-    Color(string hexCode);
+    Color(std::string hexCode);
     Color(const char* hexCode);
-    Color(unsigned int hexCode);
+    Color(int hexCode);
 };

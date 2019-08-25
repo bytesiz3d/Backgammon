@@ -5,7 +5,8 @@ Color::Color()
     r = g = b = 0;
 }
 
-Color::Color(string hexCode)
+// Decodes std::string hexadecimal color value
+Color::Color(std::string hexCode)
 {
     if (hexCode[0] == '#')
 	hexCode = hexCode.substr(1, hexCode.size() - 1);
@@ -36,11 +37,12 @@ Color::Color(string hexCode)
 
 Color::Color(const char* hexCode)
 {
-    string hex = hexCode;
+    std::string hex = hexCode;
     *this = Color(hex);
 }
 
-Color::Color(unsigned int hexCode)
+// Decodes integer hexadecimal color code
+Color::Color(int hexCode)
 {
     r = 0;
     g = 0;

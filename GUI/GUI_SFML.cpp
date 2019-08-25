@@ -222,11 +222,14 @@ void GUI_SFML::DrawBoard(PROGRAM_MODE CURRENT_MODE, Cell * board)
         break;
     }
 
+    // Draw the background
     mWindow->clear(currentColor);
-
+    
+    // Draw the board
     for (int i = 0; i < 24; i++)
         DrawCell(i, board[i]);
 
+    // Draw the middle separator
     currentColor = sf::Color(mColors[IDLE].r, mColors[IDLE].g, mColors[IDLE].b, 0xFF);
 
     sf::RectangleShape middleBar(sf::Vector2f(mBarWidth - 16, mScreenHeight));
@@ -252,10 +255,10 @@ void GUI_SFML::DrawCell(int i, const Cell & c)
 
     i %= 6;
 
+    // Locating the three points
     Point p1 = { mCellWidth * i, 0 };
     Point p2 = { mCellWidth * (1 + i), 0 };
     Point p3 = { mCellWidth * (0.5 + i), mCellHeight };
-
 
     switch (quad)
     {
@@ -299,6 +302,7 @@ void GUI_SFML::DrawCell(int i, const Cell & c)
         break;
     }
 
+    // Drawing the triangle
     sf::Color currentColor(cellColor.r, cellColor.g, cellColor.b, 0xFF);
 
     sf::ConvexShape cellTriangle;
@@ -315,6 +319,7 @@ void GUI_SFML::DrawCell(int i, const Cell & c)
 
     mWindow->draw(cellTriangle);
 
+    // Displaying the pieces
     for (int i = 0; i < c.tokenCount; i++)
     {
 	if (i < 4)

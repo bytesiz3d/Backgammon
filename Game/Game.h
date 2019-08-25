@@ -1,5 +1,6 @@
 #pragma once
 
+// Choosing the GUI implementation:
 #if !defined(GUI)
 	#if defined(_GUI_GLFW_)	
 		#define GUI GUI_GLFW
@@ -20,13 +21,17 @@ class Game
 
     // Board
     Cell mCell[24];
-        
+
+    // Storage for moves
     std::vector<int> mMoves;
-        
+    
+    // Bearing Off flags    
     bool mBearingOff[2];
 
+    // Current program state
     PROGRAM_MODE mMode;
 
+    // Utility Functions:
     void ResetAllCells(STATUS PLAYER);
     void ShowMoves(int click, STATUS PLAYER);
 

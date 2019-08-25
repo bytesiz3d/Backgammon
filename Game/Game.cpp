@@ -1,10 +1,9 @@
 #include "Game.h"
 
 
-
+// Removes highlighting from all cells
 void Game::ResetAllCells(STATUS PLAYER)
 {
-    // Reset all cells
     for (auto &c : mCell)
         if (c.status == HIGHLIGHTED || c.status == SELECTED)
             if (c.tokenCount == 0)
@@ -15,6 +14,7 @@ void Game::ResetAllCells(STATUS PLAYER)
                 c.player = PLAYER;
 }
 
+// Highlights all available moves
 void Game::ShowMoves(int click, STATUS PLAYER)
 {
     switch (PLAYER)
@@ -39,14 +39,18 @@ void Game::ShowMoves(int click, STATUS PLAYER)
     }
 }
 
+// Returns true if a piece can be taken off the board
 bool Game::Removable(STATUS PLAYER, int& largestMove, int& furthestCell)
 {
     furthestCell = 999;
     largestMove = -1;
 
+    // Find the largest move
     for (auto move : mMoves)
         largestMove = (move > largestMove) ? move : largestMove;
-        
+
+    // Find the furthest cell from the edge
+    // If a piece matches a move, return true
     switch (PLAYER)
     {
     case WHITE:
@@ -83,11 +87,15 @@ bool Game::Removable(STATUS PLAYER, int& largestMove, int& furthestCell)
 
         break;
     }
+    // If no piece matches a move, return true if the largest move can
+    // remove the furthest piece
     return largestMove > furthestCell;
 }
 
+// Shows all pieces that can be taken off the board
 void Game::ShowRemovableMoves(STATUS PLAYER, int largestMove, int furthestCell)
 {
+    // If the largest move can remove the furthest cell, highlight everything
     if (largestMove > furthestCell)
     {
         switch (PLAYER)
@@ -110,6 +118,7 @@ void Game::ShowRemovableMoves(STATUS PLAYER, int largestMove, int furthestCell)
         }
     }
 
+    // And if not, highlight available moves
     else
     {
         switch (PLAYER)
@@ -138,13 +147,17 @@ void Game::ShowRemovableMoves(STATUS PLAYER, int largestMove, int furthestCell)
     }
 }
 
+// Fills the Moves vector
 void Game::FillMoves()
 {
     std::cout << "\n Rolling!\n";
 
+    // "Roll" twice
     mMoves.push_back(rand() % 6 + 1);
     mMoves.push_back(rand() % 6 + 1);
     std::cout << "\n " << mMoves[0] << " " << mMoves[1];
+    
+    // Add two additional moves if a pair is rolled
     if (mMoves[0] == mMoves[1])
     {
         mMoves.push_back(mMoves[0]);
@@ -154,15 +167,19 @@ void Game::FillMoves()
     std::cout << " \n";
 }
 
+// Removes the chosen move from the Moves vector
 void Game::RemoveChosenMove(int previousCell, int chosenCell, STATUS PLAYER)
 {
     int validMove = abs(chosenCell - previousCell);
     std::vector<int>::iterator moveItr = mMoves.begin();
 
+    // If the move is found, remove it
     for (; moveItr < mMoves.end(); moveItr++)
         if (*moveItr == validMove)
             break;
 
+    // If not, find the smallest possible move that is larger than the chosen one,
+    // and remove it
     if (moveItr == mMoves.end())
     {
         moveItr = mMoves.begin();
@@ -181,6 +198,7 @@ void Game::RemoveChosenMove(int previousCell, int chosenCell, STATUS PLAYER)
     mMoves.erase(moveItr);
 }
 
+// Moves the piece between two cells (or off the board)
 void Game::DoMove(int previousCell, int chosenCell, STATUS PLAYER)
 {
     if (--mCell[previousCell].tokenCount == 0)
@@ -190,6 +208,7 @@ void Game::DoMove(int previousCell, int chosenCell, STATUS PLAYER)
         mCell[previousCell].status = PLAYER,
         mCell[previousCell].player = PLAYER;
 
+    // If the selected cell isn't an edge, place the piece
     if (chosenCell > -1 && chosenCell < 24)
     {
         mCell[chosenCell].tokenCount++;
@@ -198,6 +217,7 @@ void Game::DoMove(int previousCell, int chosenCell, STATUS PLAYER)
     }
 }
 
+// Sets the Bearing Off flags for both players
 void Game::CheckBearingOff(STATUS PLAYER)
 {
     switch (PLAYER)
@@ -252,6 +272,7 @@ Game::Game()
     mCell[23] = Cell(BLACK, BLACK, 15);
 }
 
+// Main Game Loop
 void Game::Play()
 {
     mMoves.resize(0);
@@ -264,6 +285,7 @@ void Game::Play()
     
     STATUS PLAYER = IDLE;
 
+    // Roll to decide the starting player.
     do {
         mMoves.clear();
         FillMoves();
