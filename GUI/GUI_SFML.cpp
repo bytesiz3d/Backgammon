@@ -47,6 +47,10 @@ int GUI_SFML::CellNumber()
 
     float At, A1, A2, A3;
 
+    sf::Sprite token;
+    token.setTexture(mTexture[0]);
+    token.setOrigin(sf::Vector2f((float)mSpriteRadius, (float)mSpriteRadius));
+
     for (int i = 0; i < 6; i++)
     {
         //Top Left:
@@ -61,7 +65,16 @@ int GUI_SFML::CellNumber()
 
         if (At == A1 + A2 + A3)
             return i;
-
+	else
+	{
+	    // Check for collision with the final circle:
+	    token.setPosition(sf::Vector2f
+			      (C.x, mTokenRadius + (2 * mTokenRadius + 2) * 3));
+	    
+	    if (token.getGlobalBounds().contains(P.x, P.y))
+		return i;
+	}
+		
         //Top Right:
         A.x += 6 * mCellWidth + mBarWidth;
         B.x += 6 * mCellWidth + mBarWidth;
@@ -74,6 +87,15 @@ int GUI_SFML::CellNumber()
 
         if (At == A1 + A2 + A3)
             return i + 6;
+	else
+	{
+	    // Check for collision with the final circle:
+	    token.setPosition(sf::Vector2f
+			      (C.x, mTokenRadius + (2 * mTokenRadius + 2) * 3));
+	    
+	    if (token.getGlobalBounds().contains(P.x, P.y))
+		return i + 6;
+	}
 
         //Bottom Right:
         A.y = B.y = mScreenHeight;
@@ -86,6 +108,15 @@ int GUI_SFML::CellNumber()
 
         if (At == A1 + A2 + A3)
             return 17 - i;
+	else
+	{
+	    // Check for collision with the final circle:
+	    token.setPosition(sf::Vector2f
+			      (C.x, (mScreenHeight - mTokenRadius) - (2 * mTokenRadius + 2) * 3));
+	    
+	    if (token.getGlobalBounds().contains(P.x, P.y))
+		return 17 - i;
+	}
 
         //Bottom Left
         A.x -= 6 * mCellWidth + mBarWidth;
@@ -99,6 +130,15 @@ int GUI_SFML::CellNumber()
 
         if (At == A1 + A2 + A3)
             return 23 - i;
+	else
+	{
+	    // Check for collision with the final circle:
+	    token.setPosition(sf::Vector2f
+			      (C.x, (mScreenHeight - mTokenRadius) - (2 * mTokenRadius + 2) * 3));
+
+	    if (token.getGlobalBounds().contains(P.x, P.y))
+		return 23 - i;
+	}
     }
 
     return -1;
@@ -164,13 +204,10 @@ void GUI_SFML::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell * board, STATUS PL
 	sf::Sprite token;
 	token.setTexture(mTexture[PLAYER]);
 
-        token.scale(sf::Vector2f((float)mTokenRadius / mSpriteRadius,
-                                 (float)mTokenRadius / mSpriteRadius));
-
         token.setOrigin(sf::Vector2f((float)mSpriteRadius, (float)mSpriteRadius));
 
-        token.setPosition(sf::Vector2f(sf::Mouse::getPosition(*mWindow).x,
-                                       sf::Mouse::getPosition(*mWindow).y));
+        token.setPosition(sf::Vector2f
+			  (sf::Mouse::getPosition(*mWindow).x, sf::Mouse::getPosition(*mWindow).y));
 
 	mWindow->draw(token);
     }
@@ -331,15 +368,14 @@ void GUI_SFML::DrawCell(int i, const Cell & c)
 	    sf::Sprite token;
 	    token.setTexture(mTexture[c.player]);
 
-	    token.scale(sf::Vector2f((float)mTokenRadius / mSpriteRadius,
-                                     (float)mTokenRadius / mSpriteRadius));
-
 	    token.setOrigin(sf::Vector2f((float)mSpriteRadius, (float)mSpriteRadius));
 
 	    if (p3.y < mScreenHeight / 2)
-		token.setPosition(sf::Vector2f(p3.x, mTokenRadius + (2 * mTokenRadius + 2) * i));
+		token.setPosition(sf::Vector2f
+				  (p3.x, mTokenRadius + (2 * mTokenRadius + 2) * i));
 	    else
-		token.setPosition(sf::Vector2f(p3.x, (mScreenHeight - mTokenRadius) - (2 * mTokenRadius + 2) * i));
+		token.setPosition(sf::Vector2f
+				  (p3.x, (mScreenHeight - mTokenRadius) - (2 * mTokenRadius + 2) * i));
 
 	    mWindow->draw(token);
 	}
