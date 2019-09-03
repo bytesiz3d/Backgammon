@@ -12,8 +12,9 @@ class GUI_SFML
     
     int mScreenWidth, mScreenHeight,
 	mCellWidth, mCellHeight,
-	mTokenRadius, mBarWidth;
-
+	mTokenRadius, mBarWidth,
+        mSpriteRadius;
+    
     Color mColors[STATUS_COUNT];
 
     // Mouse and flags:

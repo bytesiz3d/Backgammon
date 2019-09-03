@@ -13,7 +13,8 @@ bool GUI_SFML::mPickupf = false;
 
 GUI_SFML::GUI_SFML() :
     mScreenWidth(1280), mScreenHeight(900), mCellWidth(100), mCellHeight(360),
-    mTokenRadius(45), mBarWidth(80)
+    mTokenRadius(45), mBarWidth(80),
+    mSpriteRadius(45)
 {
     srand(time(0));
 
@@ -31,8 +32,8 @@ GUI_SFML::GUI_SFML() :
     mWindow = new sf::RenderWindow(sf::VideoMode(mScreenWidth, mScreenHeight), "Backgammon!", sf::Style::Titlebar | sf::Style::Close, settings);
 
     // Loading the textures:
-    if (!mTexture[WHITE].loadFromFile("../assets/white.png") ||
-	!mTexture[BLACK].loadFromFile("../assets/black.png"))
+    if (!mTexture[WHITE].loadFromFile("../assets/white-90.png") ||
+	!mTexture[BLACK].loadFromFile("../assets/black-90.png"))
     {
 	std::cerr << "Failed to load textures\n";
 	mClosef = true;
@@ -162,11 +163,14 @@ void GUI_SFML::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell * board, STATUS PL
     {
 	sf::Sprite token;
 	token.setTexture(mTexture[PLAYER]);
-	token.scale(sf::Vector2f(0.45f, 0.45f));
-	token.setOrigin(sf::Vector2f(100, 100));
 
-	token.setPosition(sf::Vector2f(
-			      sf::Mouse::getPosition(*mWindow).x, sf::Mouse::getPosition(*mWindow).y));
+        token.scale(sf::Vector2f((float)mTokenRadius / mSpriteRadius,
+                                 (float)mTokenRadius / mSpriteRadius));
+
+        token.setOrigin(sf::Vector2f((float)mSpriteRadius, (float)mSpriteRadius));
+
+        token.setPosition(sf::Vector2f(sf::Mouse::getPosition(*mWindow).x,
+                                       sf::Mouse::getPosition(*mWindow).y));
 
 	mWindow->draw(token);
     }
@@ -326,13 +330,16 @@ void GUI_SFML::DrawCell(int i, const Cell & c)
 	{
 	    sf::Sprite token;
 	    token.setTexture(mTexture[c.player]);
-	    token.scale(sf::Vector2f(0.45, 0.45));
-	    token.setOrigin(sf::Vector2f(100, 100));
+
+	    token.scale(sf::Vector2f((float)mTokenRadius / mSpriteRadius,
+                                     (float)mTokenRadius / mSpriteRadius));
+
+	    token.setOrigin(sf::Vector2f((float)mSpriteRadius, (float)mSpriteRadius));
 
 	    if (p3.y < mScreenHeight / 2)
-		token.setPosition(sf::Vector2f(p3.x, mTokenRadius + (2 * mTokenRadius - 2) * i));
+		token.setPosition(sf::Vector2f(p3.x, mTokenRadius + (2 * mTokenRadius + 2) * i));
 	    else
-		token.setPosition(sf::Vector2f(p3.x, (mScreenHeight - mTokenRadius) - (2 * mTokenRadius - 2) * i));
+		token.setPosition(sf::Vector2f(p3.x, (mScreenHeight - mTokenRadius) - (2 * mTokenRadius + 2) * i));
 
 	    mWindow->draw(token);
 	}
