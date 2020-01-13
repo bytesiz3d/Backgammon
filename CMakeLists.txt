@@ -13,30 +13,30 @@ if(BKG_USE_GLFW AND (BKG_USE_SFML))
 endif()
 
 if(BKG_USE_GLFW AND (NOT (BKG_USE_SFML)))
-  list(APPEND BKG_GUI_FILES GUI/GUI_GLFW.cpp GUI/GUI_GLFW.h)
+  list(APPEND BKG_GUI_FILES src/GUI/GUI_GLFW.cpp src/GUI/GUI_GLFW.h)
   add_compile_definitions(_GUI_GLFW_)
 endif()
 
 if(BKG_USE_SFML AND (NOT (BKG_USE_GLFW)))
-  list (APPEND BKG_GUI_FILES GUI/GUI_SFML.cpp GUI/GUI_SFML.h)
+  list (APPEND BKG_GUI_FILES src/GUI/GUI_SFML.cpp src/GUI/GUI_SFML.h)
   add_compile_definitions(_GUI_SFML_)
 endif()
 
 # Project and Source Groups:
 project(Backgammon)
 add_executable(Backgammon
-  source/main.cpp
-  Utility/Utility.cpp
-  Utility/Utility.h
+  src/main.cpp
+  src/Utility/Utility.cpp
+  src/Utility/Utility.h
   ${BKG_GUI_FILES}
-  Game/Game.cpp
-  Game/Game.h     
+  src/Game/Game.cpp
+  src/Game/Game.h     
   )
 
 source_group("Utility"
   FILES
-  Utility/Utility.cpp
-  Utility/Utility.h
+  src/Utility/Utility.cpp
+  src/Utility/Utility.h
   )
 
 source_group("GUI"
@@ -46,8 +46,8 @@ source_group("GUI"
 
 source_group("Game"
   FILES
-  Game/Game.cpp
-  Game/Game.h
+  src/Game/Game.cpp
+  src/Game/Game.h
   )
 
 # OpenGL:
