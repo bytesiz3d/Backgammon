@@ -1,23 +1,9 @@
 #pragma once
-
-// Choosing the GUI implementation:
-#if !defined(GUI)
-#if defined(_GUI_GLFW_)
-#define GUI GUI_GLFW
-#elif defined(_GUI_SFML_)
-#define GUI GUI_SFML
-#endif
-#endif
-
-#if defined(_GUI_GLFW_)
-#include "../GUI/GUI_GLFW.h"
-#elif defined(_GUI_SFML_)
 #include "../GUI/GUI_SFML.h"
-#endif
 
 class Game
 {
-	GUI *pGUI;
+	GUI_SFML *pGUI;
 
 	// Board
 	Cell mCell[24];

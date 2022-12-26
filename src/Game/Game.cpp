@@ -267,7 +267,7 @@ Game::CheckBearingOff(STATUS PLAYER)
 Game::Game()
 	: mMode(STANDBY)
 {
-	pGUI = new GUI;
+	pGUI = new GUI_SFML;
 	mBearingOff[0] = mBearingOff[1] = false;
 
 	mCell[0] = Cell(WHITE, WHITE, 15);

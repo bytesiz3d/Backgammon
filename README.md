@@ -6,9 +6,6 @@ This is an implementation of the famous board game, using C++ and SFML on win32.
 
 The project only supports [cmake](https://cmake.org/) currently.
 
-Please select either one of (**BKG_USE_SFML**, **BKG_USE_GLFW**) to choose the implementation of the GUI. 
-Currently the selectable pieces are only available using the SFML implementation.
-
 ## How to play?
 
 Run **Backgammon.exe**
