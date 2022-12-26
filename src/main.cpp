@@ -1,13 +1,8 @@
 #include "Game/Game.h"
 
-int main(void)
+int
+main(void)
 {
-    Game *pGame = new Game;
-        
-    pGame->Play();
-        
-    delete pGame;
-
-    return 0;
+	Game().Play();
+	return 0;
 }
-
