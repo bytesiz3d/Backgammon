@@ -151,21 +151,16 @@ Game::ShowRemovableMoves(STATUS PLAYER, int largestMove, int furthestCell)
 void
 Game::FillMoves()
 {
-	std::cout << "\n Rolling!\n";
-
 	// "Roll" twice
 	mMoves.push_back(rand() % 6 + 1);
 	mMoves.push_back(rand() % 6 + 1);
-	std::cout << "\n " << mMoves[0] << " " << mMoves[1];
 
 	// Add two additional moves if a pair is rolled
 	if (mMoves[0] == mMoves[1])
 	{
 		mMoves.push_back(mMoves[0]);
 		mMoves.push_back(mMoves[0]);
-		std::cout << " " << mMoves[0] << " " << mMoves[0];
 	}
-	std::cout << " \n";
 }
 
 // Removes the chosen move from the Moves vector
@@ -300,9 +295,6 @@ Game::Play()
 	} while (mMoves[0] == mMoves[1]);
 	mMoves.clear();
 
-	std::cout << "\n--------------------------------------------\n\n>> "
-			  << ((PLAYER == WHITE) ? "White's turn\n" : "Black's turn\n");
-
 	/*
 	  Poll Events
 	  Handle Events
@@ -354,9 +346,7 @@ Game::Play()
 				mMoves.clear();
 
 				// Change turn
-				std::cout << "\n--------------------------------------------\n";
 				PLAYER = (STATUS)!PLAYER;
-				std::cout << "\n>> " << ((PLAYER == WHITE) ? "White's turn\n" : "Black's turn\n");
 
 				// Standby
 				mMode = STANDBY;
@@ -370,9 +360,7 @@ Game::Play()
 				ResetAllCells(PLAYER);
 
 				// Change turn
-				std::cout << "\n>> End of turn\n\n--------------------------------------------\n";
 				PLAYER = (STATUS)!PLAYER;
-				std::cout << "\n>> " << ((PLAYER == WHITE) ? "White's turn\n" : "Black's turn\n");
 
 				// Standby
 				mMode = STANDBY;
@@ -387,22 +375,8 @@ Game::Play()
 			if (mCell[click].status == IDLE)
 				break;
 
-			if (mCell[click].status == (STATUS)!PLAYER)
-			{
-				std::cout << "\n Cell " << click + 1 << " has " << mCell[click].tokenCount << " piece";
-				if (mCell[click].tokenCount > 1)
-					std::cout << "s";
-				std::cout << "\n";
-				break;
-			}
-
 			// Show moves
 			ShowMoves(click, PLAYER);
-
-			std::cout << "\n Cell " << click + 1 << " has " << mCell[click].tokenCount << " piece";
-			if (mCell[click].tokenCount > 1)
-				std::cout << "s";
-			std::cout << "\n";
 
 			// Record current cell
 			prevCell = click;
@@ -483,9 +457,7 @@ Game::Play()
 				mMoves.clear();
 
 				// Change turn
-				std::cout << "\n--------------------------------------------\n";
 				PLAYER = (STATUS)!PLAYER;
-				std::cout << "\n>> " << ((PLAYER == WHITE) ? "White's turn\n" : "Black's turn\n");
 
 				// Standby
 				mMode = STANDBY;
@@ -499,9 +471,7 @@ Game::Play()
 				ResetAllCells(PLAYER);
 
 				// Change turn
-				std::cout << "\n>> End of turn\n\n--------------------------------------------\n";
 				PLAYER = (STATUS)!PLAYER;
-				std::cout << "\n>> " << ((PLAYER == WHITE) ? "White's turn\n" : "Black's turn\n");
 
 				// Standby
 				mMode = STANDBY;
@@ -536,9 +506,7 @@ Game::Play()
 				mMoves.clear();
 
 				// Change turn
-				std::cout << "\n--------------------------------------------\n";
 				PLAYER = (STATUS)!PLAYER;
-				std::cout << "\n>> " << ((PLAYER == WHITE) ? "White's turn\n" : "Black's turn\n");
 
 				// Standby
 				mMode = STANDBY;
@@ -568,7 +536,7 @@ Game::Play()
 			break;
 		}
 
-		pGUI->UpdateInteface(mMode, mCell, PLAYER);
+		pGUI->UpdateInteface(mMode, mMoves, mCell, PLAYER);
 	}
 }
 

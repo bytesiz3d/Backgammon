@@ -16,6 +16,7 @@ add_executable(Backgammon
 	src/main.cpp
 	src/Utility/Utility.cpp
 	src/Utility/Utility.h
+	src/GUI/Roboto-Medium-ttf.h
 	src/GUI/GUI_SFML.h
 	src/GUI/GUI_SFML.cpp
 	src/Game/Game.cpp

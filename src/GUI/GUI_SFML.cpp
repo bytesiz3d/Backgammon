@@ -1,4 +1,5 @@
 #include "GUI_SFML.h"
+#include "Roboto-Medium-ttf.h"
 #include <imgui-SFML.h>
 #include <imgui.h>
 
@@ -17,9 +18,11 @@ GUI_SFML::GUI_SFML()
 	: mScreenWidth(1280), mScreenHeight(900), mCellWidth(100), mCellHeight(360),
 	  mTokenRadius(45), mBarWidth(80),
 	  mSpriteRadius(45),
-	  mWindow(sf::VideoMode(mScreenWidth, mScreenHeight), "Backgammon!", sf::Style::Titlebar | sf::Style::Close, sf::ContextSettings(0, 0, 8)), mDeltaClock()
+	  mWindow(sf::VideoMode(mScreenWidth, mScreenHeight), "Backgammon!", sf::Style::Titlebar | sf::Style::Close, sf::ContextSettings(0, 0, 8)), mDeltaClock(),
+	  mFont()
 {
 	srand(time(0));
+	mFont.loadFromMemory(Roboto_Medium_ttf, Roboto_Medium_ttf_len);
 
 	ImGui::SFML::Init(mWindow);
 
@@ -190,7 +193,7 @@ GUI_SFML::PollEvents()
 }
 
 void
-GUI_SFML::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board, STATUS PLAYER)
+GUI_SFML::UpdateInteface(PROGRAM_MODE CURRENT_MODE, std::span<int> moves, Cell *board, STATUS PLAYER)
 {
 	mLeftClickf = false;
 	mCancelf = false;
@@ -225,33 +228,53 @@ GUI_SFML::UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board, STATUS PLAYER)
 			"BO_MOVE_SELECTION",
 		};
 
+		ImGui::Text("SPACE: Roll dice\n"
+					"LMB: Pickup piece\n"
+					"RMB: Cancel piece pickup");
+		ImGui::Separator();
+
+		switch (CURRENT_MODE)
+		{
+		case STANDBY:
+			ImGui::Text("Roll the dice!");
+			ImGui::Separator();
+			break;
+
+		case PIECE_SELECTION: {
+			ImGui::Text("Moves: ");
+			for (auto m: moves)
+			{
+				ImGui::SameLine();
+				ImGui::Text("%d", m);
+			}
+			ImGui::Separator();
+			break;
+		}
+
+		default:
+			break;
+		}
+
 		if (ImGui::BeginTable("##stats", 2, ImGuiTableFlags_BordersInnerV, {-FLT_MIN, -FLT_MIN}))
 		{
 			ImGui::TableSetupColumn("##labels", ImGuiTableColumnFlags_WidthFixed);
 
-			ImGui::TableNextColumn();
-			ImGui::Text("Player");
-			ImGui::TableNextColumn();
-			ImGui::Text(PLAYER_NAMES[PLAYER]);
+			ImGui::TableNextColumn(); ImGui::Text("Player");
+			ImGui::TableNextColumn(); ImGui::Text(PLAYER_NAMES[PLAYER]);
 
-			ImGui::TableNextColumn();
-			ImGui::Text("Mode");
-			ImGui::TableNextColumn();
-			ImGui::Text(MODE_NAMES[CURRENT_MODE]);
+			ImGui::TableNextColumn(); ImGui::Text("Mode");
+			ImGui::TableNextColumn(); ImGui::Text(MODE_NAMES[CURRENT_MODE]);
 
 			if (mPickupf)
 			{
-				ImGui::TableNextColumn();
-				ImGui::Text("Token");
-				ImGui::TableNextColumn();
-				ImGui::Text("HELD");
+				ImGui::TableNextColumn(); ImGui::Text("Token");
+				ImGui::TableNextColumn(); ImGui::Text("HELD");
 			}
 
 			ImGui::EndTable();
 		}
-
-		ImGui::End();
 	}
+	ImGui::End();
 
 	// Swap Buffers:
 	ImGui::SFML::Render(mWindow);
@@ -423,6 +446,23 @@ GUI_SFML::DrawCell(int i, const Cell &c)
 				token.setPosition(sf::Vector2f(p3.x, (mScreenHeight - mTokenRadius) - (2 * mTokenRadius + 2) * i));
 
 			mWindow.draw(token);
+		}
+		else
+		{
+			constexpr unsigned int textSize = 20;
+			sf::Text text{std::to_string(c.tokenCount), mFont, textSize};
+			text.setOrigin(sf::Vector2f(textSize / 2.f, textSize / 2.f));
+			text.setColor(sf::Color::Black);
+
+			float text_y = p3.y;
+			if (p3.y < mScreenHeight / 2) // above
+				text_y += 2 * textSize;
+			else
+				text_y -= 2 * textSize;
+
+			text.setPosition(p3.x, text_y);
+			mWindow.draw(text);
+			break;
 		}
 	}
 }

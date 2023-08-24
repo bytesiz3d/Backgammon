@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <span>
 
 class GUI_SFML
 {
@@ -14,6 +15,7 @@ class GUI_SFML
 	sf::RenderWindow mWindow;
 	sf::Texture mTexture[2];
 	sf::Clock mDeltaClock;
+	sf::Font mFont;
 
 	Color mColors[STATUS_COUNT];
 
@@ -47,7 +49,7 @@ public:
 	void
 	PollEvents();
 	void
-	UpdateInteface(PROGRAM_MODE CURRENT_MODE, Cell *board, STATUS PLAYER);
+	UpdateInteface(PROGRAM_MODE CURRENT_MODE, std::span<int> moves, Cell *board, STATUS PLAYER);
 
 	// Flags:
 	bool
